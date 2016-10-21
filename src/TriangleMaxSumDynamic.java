@@ -27,8 +27,6 @@ public class TriangleMaxSumDynamic {
                 maxIdx[i] = -1;
             }
             System.out.println(getCost(maxIdx, arr, cost, h - 1));
-
-
         }
     }
 
