@@ -16,6 +16,7 @@ public class FibonacciDynamic {
         int n;
         int zeroCnt, oneCnt;
         T = sc.nextInt();
+        int a= sc.nextInt();
         int[][] table = new int[2][41];
         for (int t = 0; t < T; t++) {
             n = sc.nextInt();
