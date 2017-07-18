@@ -4,7 +4,7 @@ package recursion;
  * Created by junhyeok on 2017-07-09.
  */
 public class NQueens {
-    public static final int N = 6;
+    public static final int N = 10;
     public static int[] cols = new int[N + 1];
 
     public static void main(String[] args) {
