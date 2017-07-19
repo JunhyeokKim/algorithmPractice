@@ -1,88 +1,56 @@
 package dynamicProgramming;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
  * Created by junhyeok on 2016-10-20.
  */
 public class RGBDynamic {
-    public static void main(String[] args) throws FileNotFoundException {
-        Scanner sc = new Scanner(new FileInputStream("input2.txt"));
-        //Scanner sc = new Scanner(System.in);
+    public static int[][] cost;
+    public static int[] color;
+    public static int[][] map;
 
-        int n = sc.nextInt();
-        int[][] rgb;
-        int[] cost;
-        int[] table;        //r:0, g:1, b:2
-        int result;
-        rgb = new int[n][3];
-        table = new int[n];
-        cost = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            rgb[i][0] = sc.nextInt();
-            rgb[i][1] = sc.nextInt();
-            rgb[i][2] = sc.nextInt();
-            table[i] = -1;
-
-        }
-
-
-        System.out.println(cost[n - 1]);
-    }
-
-
-    static int findMin(int[] rgb) {
-        int minIdx = 0;
-        if (rgb[0] > rgb[1]) {
-            minIdx = 1;
-            if (rgb[1] > rgb[2]) {
-                minIdx = 2;
-            }
-        } else if (rgb[0] > rgb[2]) {
-            minIdx = 2;
-            if (rgb[2] > rgb[1]) {
-                minIdx = 1;
+    public static void main(String[] args) throws IOException {
+        //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("rgb.txt")));
+        int n = Integer.parseInt(br.readLine());
+        cost = new int[n + 1][3];
+        color = new int[n + 1];
+        map = new int[n + 1][3];
+        for (int i = 1; i <= n; i++) {
+            String[] costs = br.readLine().split(" ");
+            for (int j = 0; j < costs.length; j++) {
+                cost[i][j] = Integer.parseInt(costs[j]);
             }
         }
-        return minIdx;
+        color[0] = -1;
+        System.out.println(rgb(1, n));
+
     }
 
-
-    static int calCost(int[][] rgb, int[]cost, int[]table, int n){
-        if(n==0){
+    public static int rgb(int s, int e) {
+        if (s > e) {
             return 0;
+        } else if(map[s][color[s]]!=0){
+            return map[s][color[s]];
         }
-        else if(n==1&& table[0]==-1){
-            table[0]=findMin(rgb[0]);
-            cost[0]=rgb[0][table[0]];
-            return cost[0];
-        }
-        else if(n==2 && table[1]==-1){
-            table[1]=findMin(rgb[1]);
-            if(table[0]==table[1]){
-                int []temp0= rgb[0];
-                int []temp1=rgb[1];
-                temp0[table[0]]=Integer.MAX_VALUE;
-                temp1[table[1]]=Integer.MAX_VALUE;
-                int temp0Idx=findMin(temp0);
-                int temp1Idx=findMin(temp1);
-                if(rgb[0][table[0]]+rgb[1][temp1Idx]>rgb[0][temp0Idx]+rgb[1][table[1]]){
-                    table[0]=temp0Idx;
+        else {
+            int min = Integer.MAX_VALUE;
+            int minColor = -1;
+            for (int i = 0; i < 3; i++) {   // i= color
+                if (color[s - 1] != i) {
+                    color[s] = i;
+                    int temp = cost[s][color[s]] + rgb(s + 1, e);
+                    if (min > temp) {
+                        min = temp;
+                        minColor = i;
+                    }
                 }
-                else{
-                    table[1]=temp1Idx;
-                }
-                cost[1]=rgb[0][table[0]]+rgb[1][table[1]];
-                return cost[1];
             }
+            map[s][minColor] = min;
+            return min;
         }
-        else{
-
-        }
-        return 0;
     }
 
 }

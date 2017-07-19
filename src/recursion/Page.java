@@ -7,14 +7,15 @@ import java.util.Scanner;
  * Problem NO: 1019
  */
 public class Page {
+    // 0~9가 총 나타난 횟수
     public static int[] cnts;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = 27;
+        int n = sc.nextInt();
         cnts = new int[10];
         StringBuilder builder = new StringBuilder();
-        getTotPage(0, n);
+        getTotPage(1, n);
         for (int i = 0; i < 10; i++)
             builder.append(cnts[i] + " ");
         System.out.println(builder.toString().trim());
@@ -22,16 +23,17 @@ public class Page {
 
     public static void getTotPage(int start, int end) {
         int multiply = 1;
+
         while (start <= end) {
             while ((start % 10 != 0) || (end % 10 != 9)) {
                 if (start == end) {
                     calc(start++, multiply);
                     return;
                 } else {
-                    if (start % 10 != 0)
-                        calc(start++,multiply);
-                    if (end % 10 != 9 && start!=end)
-                        calc(end--,multiply);
+                    if (start % 10 != 0 && start != end)
+                        calc(start++, multiply);
+                    if (end % 10 != 9 && start != end)
+                        calc(end--, multiply);
                 }
             }
             int sDiv = start / 10;
@@ -46,7 +48,7 @@ public class Page {
 
     public static void calc(int p, int multiply) {
         while (p > 0) {
-            cnts[p % 10] += Math.pow(10,multiply-1);
+            cnts[p % 10] += Math.pow(10, multiply - 1);
             p /= 10;
         }
     }
