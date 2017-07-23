@@ -2,6 +2,7 @@ package graph;
 
 import java.io.*;
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -39,7 +40,7 @@ public class Maze {
 
     public static int bfs() {
         // queue의 기본 capacity는 1000이다. input인 n,m은 2 이상 100 이하이므로 최대 10000개의 노드가 큐에 들어갈 것이다.
-        Queue<Pos> queue = new ArrayDeque<>(100000);
+        Queue<Pos> queue = new LinkedList<>();
         queue.add(new Pos(0, 0));
         int cnt = 0;
         // 큐에 정점을 넣기 전에 방문했다고 표시를 해야 중복된 값이 다시 큐에 등록되지 않는다.
