@@ -34,25 +34,28 @@ public class GameDevelope {
                 map.get(i).add(Integer.parseInt(params[j]));
             }
         }
-        /*for (int i = 1; i <= n; i++) {
-           System.out.println(findMin(i));
-        }*/
-        System.out.println(findMin(5));
+        for (int i = 1; i <= n; i++) {
+            bw.write(findMin(i) + "\n");
+        }
+        bw.flush();
     }
 
     private static int findMin(int v) {
         int sum = cost[v];
+        int max = 0;
         LinkedList<Integer> adjacentList = map.get(v);
         if (adjacentList != null) {
             for (int item : adjacentList) {
                 if (!visited[item]) {
-                    int temp= dfs(item);
-                    System.out.println(temp);
+                    int temp = dfs(item);
+                    if (max < temp) {
+                        max = temp;
+                    }
                 }
+                Arrays.fill(visited, false);
             }
         }
-        Arrays.fill(visited, false);
-        return sum;
+        return sum + max;
     }
 
     public static int dfs(int v) {
