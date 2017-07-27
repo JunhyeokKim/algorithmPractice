@@ -7,6 +7,12 @@ import java.io.InputStreamReader;
 
 /**
  * Created by junhyeok on 2017-07-21.
+ * Problem NO:2156
+ * dp를 이용한 최대값을 구하는 문제. 연속적으로 3개 이상 선택하지 못함.
+ * 최대값 cost[n]은 3가지 부분집합으로 이루어져있다. 문제를 더 작은 문제로 쪼개는 것을 연습해야 한다.
+ * 1. n번째를 선택하고 n-1번쨰는 선택하지 않을 때 n-2까지의 최대값 cost[n-2]  ~XO
+ * 2. n번째를 선택하지 않고 n-1번째까지의 최대값 cost[n-1]   ~X
+ * 3. n번째를 선택하고 n-1,n-2번째를 선택하지 않았을 때 n-3까지의 최대값 cost[n-3]  ~XXO
  */
 public class Wine {
     public static int[] cost;
