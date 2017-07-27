@@ -33,6 +33,7 @@ public class Lining {
         }
         sort2();
     }
+
     // dfs를 통한 위상 정렬 방식.
     public static void sort() throws IOException {
         List<Integer> list = new LinkedList<>();
@@ -48,6 +49,7 @@ public class Lining {
         }
         bw.flush();
     }
+
     // indegree 검사를 통한 위상정렬 방식. bfs와 유사하다.
     public static void sort2() {
         LinkedList<Integer> list = new LinkedList<>();

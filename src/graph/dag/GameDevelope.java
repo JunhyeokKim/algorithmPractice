@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by jhKim on 2017-07-26.
@@ -13,6 +14,7 @@ public class GameDevelope {
     public static int n;
     public static int[] cost;
     public static boolean[] visited;
+    public static int[] indegree;
     public static HashMap<Integer, LinkedList<Integer>> map;
 
     public static void main(String[] args) throws IOException {
@@ -22,6 +24,7 @@ public class GameDevelope {
         n = Integer.parseInt(br.readLine());
         cost = new int[n + 1];
         visited = new boolean[n + 1];
+        indegree = new int[n + 1];
         map = new HashMap<>();
         for (int i = 1; i <= n; i++) {
             String str = br.readLine();
@@ -31,7 +34,8 @@ public class GameDevelope {
                 if (!map.containsKey(i)) {
                     map.put(i, new LinkedList<>());
                 }
-                map.get(i).add(Integer.parseInt(params[j]));
+                map.get(Integer.parseInt(params[j])).add(i);
+                indegree[i]++;
             }
         }
         for (int i = 1; i <= n; i++) {
@@ -41,6 +45,19 @@ public class GameDevelope {
     }
 
     private static int findMin(int v) {
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 1; i <= n; i++) {
+            if (indegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+        while (!queue.isEmpty()) {
+
+        }
+        return 0;
+    }
+
+    /*private static int findMin(int v) {
         int sum = cost[v];
         int max = 0;
         LinkedList<Integer> adjacentList = map.get(v);
@@ -73,5 +90,5 @@ public class GameDevelope {
             }
         }
         return sum + max;
-    }
+    }*/
 }
