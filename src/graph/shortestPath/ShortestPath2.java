@@ -10,11 +10,19 @@ import java.util.StringTokenizer;
  * Problem No:1504
  */
 public class ShortestPath2 {
-    public final static long MAX = 987654321;
-    private static long[] d;
+    // 최단거리의 INF값. 보통 987654321을 쓴다고 한다.
+    public final static long INF = 300000000;
+    // s, e1, e2의 출발점에서의 최단 거리를 저장하기 위함
+    private static long[][] d = new long[3][801];
     private static int n;
     private static int e;
-    private static int[][] map;
+    private static int[][] map = new int[801][801];
+
+    static {
+        for (int i = 0; i < 3; i++) {
+            Arrays.fill(d[i], INF);
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,12 +30,6 @@ public class ShortestPath2 {
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         n = Integer.parseInt(st.nextToken());
         e = Integer.parseInt(st.nextToken());
-        map = new int[n + 1][n + 1];
-        for (int i = 1; i <= n; i++) {
-            Arrays.fill(map[i], -1);
-            map[i][i] = 0;
-        }
-        d = new long[n + 1];
         for (int i = 0; i < e; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int prev = Integer.parseInt(st.nextToken());
@@ -40,57 +42,32 @@ public class ShortestPath2 {
         st = new StringTokenizer(br.readLine(), " ");
         int e1 = Integer.parseInt(st.nextToken());
         int e2 = Integer.parseInt(st.nextToken());
-        boolean check1 = true;
-        boolean check2 = true;
-        long dist1 = 0;
-        long dist2 = 0;
-        int[] starts1 = {1, e1, e2};
-        int[] ends1 = {e1, e2, n};
-        int[] starts2 = {1, e2, e1};
-        int[] ends2 = {e2, e1, n};
-        for (int i = 0; i < 3; i++) {
-            dist1 += dijkstra(starts1[i], ends1[i], check1);
-            if (!check1) {
-                check1 = false;
-                break;
-            }
-        }
-        for (int i = 0; i < 3; i++) {
-            dist2 += dijkstra(starts2[i], ends2[i], check2);
-            if (!check2) {
-                check2 = false;
-                break;
-            }
-        }
-        if (!check1 && !check2) {
+        dijkstra(1, 0);
+        dijkstra(e1, 1);
+        dijkstra(e2, 2);
+        long dist1 = d[0][e1] + d[1][e2] + d[2][n];
+        long dist2 = d[0][e2] + d[2][e1] + d[1][n];
+        long result = Math.min(dist1, dist2);
+        if (result >= INF) {
             System.out.println(-1);
-        } else if (check1 && !check2) {
-            System.out.println(dist1);
-        } else if (!check1 && check2) {
-            System.out.println(dist2);
         } else {
-            System.out.println(Math.min(dist1, dist2));
+            System.out.println(result);
         }
     }
 
 
-    public static long dijkstra(int start, int end, boolean check) {
-        Arrays.fill(d, MAX);
-        d[start] = 0;
+    public static void dijkstra(int start, int idx) {
+        d[idx][start] = 0;
         PriorityQueue<Integer> queue = new PriorityQueue<>();
         queue.add(start);
         while (!queue.isEmpty()) {
             int v = queue.remove();
             for (int i = 1; i <= n; i++) {
-                if (map[v][i] != -1 && d[i] > d[v] + map[v][i]) {
-                    d[i] = d[v] + map[v][i];
+                if (map[v][i] != 0 && d[idx][i] > d[idx][v] + map[v][i]) {
+                    d[idx][i] = d[idx][v] + map[v][i];
                     queue.add(i);
                 }
             }
         }
-        if (d[end] == MAX) {
-            check = false;
-        }
-        return d[end];
     }
 }
