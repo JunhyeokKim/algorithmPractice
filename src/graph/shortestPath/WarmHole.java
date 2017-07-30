@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 public class WarmHole {
     public final static int MAX = 987654321;
 
+
     public static void main(String[] args) throws IOException {
         //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("warmHole.txt")));

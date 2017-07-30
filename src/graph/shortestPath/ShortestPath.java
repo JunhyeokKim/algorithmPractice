@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by junhyeok on 2017-07-29.
@@ -17,7 +14,6 @@ import java.util.StringTokenizer;
  * 2. 시작점 s의 최단거리 d[s]=0으로 초기화
  * 3. 시작정점 s를 우선순위큐에 삽입. 시작정점에 인접한 정점들을 큐에 삽입.
  * 4. 큐에 속한 정점 중 최단거리를 갖는 정점을 가져옴. 이것이 확정될 최단거리이다.
- *
  */
 public class ShortestPath {
     public static ArrayList<Vertex>[] adjVertexs;
@@ -25,6 +21,7 @@ public class ShortestPath {
     public final static int MAX = 3000000;
 
     public static void main(String[] args) throws IOException {
+        HashMap<Integer, Integer> map =new HashMap<>();
         //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("shortestPath.txt")));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -79,6 +76,7 @@ public class ShortestPath {
             this.v = v;
             this.w = w;
         }
+
         @Override
         public int compareTo(Vertex o) {
             if (this.w < o.w) {
