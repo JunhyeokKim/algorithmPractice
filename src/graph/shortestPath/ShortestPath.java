@@ -90,9 +90,9 @@ public class ShortestPath {
 
         @Override
         public String toString() {
-            return "Vertex{" +
+            return "Edge{" +
                     "v=" + v +
-                    ", w=" + w +
+                    ", d=" + w +
                     '}';
         }
     }

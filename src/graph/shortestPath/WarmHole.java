@@ -92,7 +92,7 @@ public class WarmHole {
         public String toString() {
             return "Vertex{" +
                     "v=" + v +
-                    ", w=" + w +
+                    ", d=" + w +
                     '}';
         }
     }
