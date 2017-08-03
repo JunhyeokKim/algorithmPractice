@@ -21,11 +21,11 @@ public class Binomial {
         s = System.nanoTime();
         System.out.println(binomialTopDown(n, k));
         e = System.nanoTime();
-        System.out.println("수행 시간: " + (e - s) / 1000000000);
+        System.out.println("top-down 수행 시간: " + (e - s) / 1000000000);
         s = System.nanoTime();
         System.out.println(binomialBottomUp(n, k));
         e = System.nanoTime();
-        System.out.println("수행 시간: " + (e - s) / 1000000000);
+        System.out.println("bottom-up 수행 시간: " + (e - s) / 1000000000);
         s = System.nanoTime();
         System.out.println(binomial(n, k));
         e = System.nanoTime();
