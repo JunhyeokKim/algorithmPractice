@@ -1,11 +1,9 @@
 package tree;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class TreePrac01 {
-    private static HashMap<String, Tree> treeHashMap = new HashMap<>();
     private static StringBuilder bd = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
@@ -13,73 +11,95 @@ public class TreePrac01 {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("input/tree.txt")));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        Tree root = new Tree("A", null, null);
-        treeHashMap.put("A", root);
+        Tree tree = new Tree(new Node('A'));
         int n = Integer.parseInt(st.nextToken());
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
-            String node = st.nextToken();
-            String left = st.nextToken();
-            String right = st.nextToken();
-            if (!treeHashMap.containsKey(node)) {
-                Tree newTree = new Tree(node, null, null);
-                treeHashMap.put(node, newTree);
-            }
-            if (!left.equals(".")) {
-                Tree newLeft = new Tree(left, null, null);
-                treeHashMap.get(node).left = newLeft;
-                treeHashMap.put(left, newLeft);
-            }
-            if (!right.equals(".")) {
-                Tree newRight = new Tree(right, null, null);
-                treeHashMap.get(node).right = newRight;
-                treeHashMap.put(right, newRight);
-            }
+            char data = st.nextToken().charAt(0);
+            char left = st.nextToken().charAt(0);
+            char right = st.nextToken().charAt(0);
+            tree.add(data, left, right);
         }
-        root.preorder();
+        tree.preorder(tree.root);
         bd.append("\n");
-        root.inorder();
+        tree.inorder(tree.root);
         bd.append("\n");
-        root.postorder();
+        tree.postorder(tree.root);
         bd.append("\n");
         System.out.println(bd.toString());
     }
 
+    private static class Node {
+        char data;
+        Node left;
+        Node right;
+
+        public Node(char data) {
+            this.data = data;
+        }
+
+    }
+
     private static class Tree {
-        String root;
-        Tree left;
-        Tree right;
+        Node root;
 
-
-        public Tree(String root, Tree left, Tree right) {
+        public Tree(Node root) {
             this.root = root;
-            this.left = left;
-            this.right = right;
         }
 
-        void preorder() {
-            bd.append(this.root);
-            if (this.left != null)
-                this.left.preorder();
-            if (this.right != null)
-                this.right.preorder();
+        public void add(char data, char left, char right) {
+            if (root == null) {
+                root = new Node(data);
+                if (left != '.') {
+                    root.left = new Node(left);
+                }
+                if (right != '.') {
+                    root.right = new Node(right);
+                }
+                return;
+            } else {
+                search(root, data, left, right);
+            }
         }
 
-        void postorder() {
-            if (this.left != null)
-                this.left.postorder();
-            if (this.right != null)
-                this.right.postorder();
-            bd.append(this.root);
+        public void search(Node root, char data, char left, char right) {
+            if (root.data == data) {
+                if (left != '.') {
+                    root.left = new Node(left);
+                }
+                if (right != '.') {
+                    root.right = new Node(right);
+                }
+            } else {
+                if (root.left != null)
+                    search(root.left, data, left, right);
+                if (root.right != null)
+                    search(root.right, data, left, right);
+            }
         }
 
-        void inorder() {
-            if (this.left != null)
-                this.left.inorder();
-            bd.append(root);
-            if (this.right != null)
-                this.right.inorder();
+        void preorder(Node node) {
+            bd.append(node.data);
+            if (node.left != null)
+                preorder(node.left);
+            if (node.right != null)
+                preorder(node.right);
+        }
 
+        void postorder(Node node) {
+            if (node.left != null)
+                postorder(node.left);
+            if (node.right != null)
+                postorder(node.right);
+            bd.append(node.data);
+        }
+
+        void inorder(Node node) {
+            if (node.left != null)
+                inorder(node.left);
+            bd.append(node.data);
+            if (node.right != null)
+                inorder(node.right);
         }
     }
 }
