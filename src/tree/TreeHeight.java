@@ -5,24 +5,29 @@ import java.util.*;
 
 /**
  * Created by junhyeok on 2017-08-13.
+ * Problem No: 1167
+ * 트리의 지름을 구하는 문제이다.
+ * 임의의 두정점의 길이 중 가장 긴 것을 트리의 지름이라고 부른다.
+ * 먼저 임의의 정점 x(root 노드로 정해도 된다)로부터 가장 먼 정점  y를 구한다.
+ * 그리고 y로부터 가장 먼 정점 t를 구하게 되면, y에서 t까지의 거리는 트리의 지름이 된다.
  */
 
 public class TreeHeight {
     private static ArrayList<Edge>[] adjList;
-    static boolean[] visited;
-    static long[][] dist;
-    static long[] rDist;
+
+    private static int n;
+    private static long[] d;
+    private static boolean[] visited;
+    private static long dfsMax = 0;
+    private static int dfsIdx;
 
     public static void main(String[] args) throws IOException {
         //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("input/treeHeight.txt")));
         StringTokenizer st = new StringTokenizer(br.readLine());
         StringBuilder bd = new StringBuilder();
-        int n = Integer.parseInt(st.nextToken());
-        visited = new boolean[n + 1];
+        n = Integer.parseInt(st.nextToken());
         adjList = new ArrayList[n + 1];
-        dist = new long[n + 1][n + 1];
-        rDist = new long[n + 1];
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
@@ -40,42 +45,66 @@ public class TreeHeight {
 
             }
         }
-        long max = 0;
-        for (int i = 1; i <= n; i++) {
-            long r = dfs(i);
-            if (r > max) {
-                max = r;
-            }
-        }
-        System.out.println(max);
+        /*int fromRoot = bfs(1);
+        int away = bfs(fromRoot);
+        System.out.println(d[away]);*/
+        dfs(1, 0);
+        dfs(dfsIdx, 0);
+        System.out.println(dfsMax);
     }
 
-    private static long dfs(int s) {
-        if (visited[s]) {
-            return 0;
-        } else {
-            visited[s] = true;
-            long max = 0;
-            int maxIdx = -1;
-            if (adjList[s] != null) {
-                PriorityQueue queue= new PriorityQueue();
-                for (Edge edge : adjList[s]) {
-                    if (!visited[edge.to]) {
-                        long childLength = dfs(edge.to);
-                        queue.add(childLength+)
-                        if (max < edge.len + childLength) {
-                            max = edge.len + childLength;
-                            maxIdx = edge.to;
+    private static int bfs(int s) {
+        Queue<Integer> queue = new LinkedList<>();
+        visited = new boolean[n + 1];
+        visited[s] = true;
+        d = new long[n + 1];
+        d[s] = 0;
+        queue.add(s);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int u = queue.remove();
+                if (adjList[u] != null) {
+                    for (Edge adjNode : adjList[u]) {
+                        if (!visited[adjNode.to]) {
+                            queue.add(adjNode.to);
+                            visited[adjNode.to] = true;
+                            d[adjNode.to] = d[u] + adjNode.len;
                         }
                     }
                 }
             }
-            if (maxIdx != -1) {
-                dist[s][maxIdx] = max;
-                dist[maxIdx][s] = max;
+        }
+        long max = 0;
+        int idx = s;
+        for (int i = 1; i <= n; i++) {
+            if (max < d[i]) {
+                max = d[i];
+                idx = i;
             }
+        }
+        return idx;
+    }
 
-            return max;
+    private static void dfs(int s, int fromRoot) {
+        if (!visited[s]) {
+            visited[s] = true;
+            long max = 0;
+            if (adjList[s] != null) {
+                for (Edge adjNode : adjList[s]) {
+                    if (!visited[adjNode.to]) {
+                        // leaf node인 경우
+                        if (adjList[adjNode.to] == null) {
+                            if (dfsMax < fromRoot + adjNode.len) {
+                                dfsMax = fromRoot + adjNode.len;
+                                dfsIdx = adjNode.to;
+                            }
+                        } else {
+                            dfs(adjNode.to, fromRoot + adjNode.len);
+                        }
+                    }
+                }
+            }
         }
     }
 
