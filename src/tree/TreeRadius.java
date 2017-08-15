@@ -12,9 +12,8 @@ import java.util.*;
  * 그리고 y로부터 가장 먼 정점 t를 구하게 되면, y에서 t까지의 거리는 트리의 지름이 된다.
  */
 
-public class TreeHeight {
+public class TreeRadius {
     private static ArrayList<Edge>[] adjList;
-
     private static int n;
     private static long[] d;
     private static boolean[] visited;
@@ -48,7 +47,10 @@ public class TreeHeight {
         /*int fromRoot = bfs(1);
         int away = bfs(fromRoot);
         System.out.println(d[away]);*/
+        visited = new boolean[n + 1];
         dfs(1, 0);
+        visited = new boolean[n + 1];
+        dfsMax = 0;
         dfs(dfsIdx, 0);
         System.out.println(dfsMax);
     }
@@ -89,12 +91,11 @@ public class TreeHeight {
     private static void dfs(int s, int fromRoot) {
         if (!visited[s]) {
             visited[s] = true;
-            long max = 0;
             if (adjList[s] != null) {
                 for (Edge adjNode : adjList[s]) {
                     if (!visited[adjNode.to]) {
                         // leaf node인 경우
-                        if (adjList[adjNode.to] == null) {
+                        if (adjList[adjNode.to].size() == 1) {
                             if (dfsMax < fromRoot + adjNode.len) {
                                 dfsMax = fromRoot + adjNode.len;
                                 dfsIdx = adjNode.to;
