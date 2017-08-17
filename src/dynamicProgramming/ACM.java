@@ -29,6 +29,7 @@ public class ACM {
             n = Integer.parseInt(st.nextToken());
             k = Integer.parseInt(st.nextToken());
             st = new StringTokenizer(br.readLine());
+            Arrays.fill(d,Integer.MAX_VALUE);
             for (int j = 1; j <= n; j++) {
                 cost[j] = Integer.parseInt(st.nextToken());
             }
