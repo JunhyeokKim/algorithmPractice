@@ -9,12 +9,15 @@ import java.util.*;
  * ACM:
  * memoization 과 dfs를 활용하여 풀 수 있거나, 혹은 위상 정렬을 통해 풀 수 있다.
  * 성능상에서는 위상정렬은 모든 정점들을 모두 방문해야 하기 때문에 도착점에서 dfs를 수행하는 것이 성능에서는 더 좋다.
- * 위상 정렬을 활용한 방법
+ * 위상 정렬, dp를 활용한 방법
  * 1. 각 노드의 indegree의 개수를 count한다.
  * 2. 위상정렬을 수행한다. 먼저 indegree가 0인 정점들을 큐에 삽입한 뒤,
  * 그 노드들을 방문하면서 outdegree로 연결된 outnode의 indegree의 개수를 감소시키고, 진출하는 간선을 제거한다.
  * outNode에 대해서 indegree를 감소시킬 때, d[outNode]<d[node]+cost[outNode]를 비교하여 최대값을 갖는 것으로 갱신한다.
  * 이를 큐가 빌때까지 반복
+ * dfs, dp를 활용한 방법
+ * 이때는 간선의 연결을 역방향으로 설정한다. 그래야 goal부터 dfs를 진행할 수 있다.
+ *
  */
 public class ACM {
     static int[] cost;
