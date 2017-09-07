@@ -1,4 +1,4 @@
-package kakao;
+package kakao.first;
 
 import java.util.Arrays;
 import java.util.LinkedList;

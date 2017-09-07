@@ -1,4 +1,4 @@
-package kakao;
+package kakao.first;
 
 import java.util.ArrayList;
 import java.util.Collections;
