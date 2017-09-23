@@ -1,4 +1,4 @@
-package kakao.first;
+package test.kakao.first;
 
 import java.util.ArrayList;
 import java.util.HashSet;

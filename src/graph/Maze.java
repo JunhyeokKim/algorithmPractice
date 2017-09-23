@@ -9,6 +9,7 @@ import java.util.Queue;
  * Created by junhyeok on 2017-07-23.
  * Problem No:2178
  * n,m까지의 최단 경로의 길이를 구하는 문제. dfs를 사용한다면 worst case로 빠지는 경우가 있기 때문에 최단 경로의 길이를 구하고자 할 때는 bfs를 활용한다.
+ * (진행 방향이 결승점으로 수렴하는 경우는 무관)
  */
 public class Maze {
     public static int[][] map;

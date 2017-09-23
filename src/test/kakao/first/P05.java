@@ -1,8 +1,7 @@
-package kakao.first;
+package test.kakao.first;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.PriorityQueue;
 
 /**
  * Created by junhyeok on 2017-08-05.

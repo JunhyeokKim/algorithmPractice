@@ -1,7 +1,6 @@
-package kakao.first;
+package test.kakao.first;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by junhyeok on 2017-08-05.

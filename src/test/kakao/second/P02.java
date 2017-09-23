@@ -1,7 +1,6 @@
-package kakao.second;
+package test.kakao.second;
 
 import java.io.*;
-import java.util.StringTokenizer;
 
 /**
  * Created by acorn on 2017-09-07.
